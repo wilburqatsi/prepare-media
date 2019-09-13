@@ -1,0 +1,19 @@
+#! /bin/bash
+
+if [ $# -eq 0 ]
+    then
+        echo "No arguments supplied. Must include files/directories to be setup for Plex..."
+    exit 1
+fi
+
+for MEDIA; do
+    sudo chown -R plex:dubya "$MEDIA"
+    sudo find "$MEDIA" -type d -exec chmod 755 {} \;
+    sudo find "$MEDIA" -type f -exec chmod 644 {} \;
+
+    if [ -d "$MEDIA"[Ss]ub* ]
+        then
+            sudo mv "$MEDIA"[Ss]ub*/* "$MEDIA"
+    fi
+    echo "$MEDIA has been set up for Plex"
+done
